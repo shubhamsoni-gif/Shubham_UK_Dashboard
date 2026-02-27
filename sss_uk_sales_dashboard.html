@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shubham Overview</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:#f0f4f8;color:#1a202c;font-size:13px;line-height:1.5;}
+
+/* HEADER */
+.top-header{background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:58px;position:sticky;top:0;z-index:200;box-shadow:0 2px 8px rgba(0,0,0,0.3);}
+.hdr-left{display:flex;align-items:center;gap:14px;}
+.hdr-logo{background:#3b82f6;color:white;font-weight:700;font-size:11px;padding:5px 10px;border-radius:5px;letter-spacing:1.5px;}
+.hdr-title{color:white;font-size:16px;font-weight:700;}
+.hdr-seg{color:#64748b;font-size:11px;margin-top:1px;}
+.hdr-right{display:flex;align-items:center;gap:10px;}
+.live-dot{background:#22c55e;color:white;font-size:10px;padding:4px 10px;border-radius:20px;font-weight:600;display:flex;align-items:center;gap:4px;}
+.live-dot::before{content:'';width:6px;height:6px;border-radius:50%;background:white;display:inline-block;}
+.hdr-date{color:#94a3b8;font-size:12px;background:rgba(255,255,255,0.07);padding:5px 11px;border-radius:6px;}
+
+/* CHANNEL SWITCHER */
+.ch-switch-bar{background:white;border-bottom:1px solid #e2e8f0;padding:10px 24px;display:flex;align-items:center;gap:10px;}
+.ch-switch-label{font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;}
+.ch-btns{display:flex;background:#f1f5f9;border-radius:8px;padding:3px;gap:2px;}
+.ch-btn{padding:5px 14px;border-radius:6px;border:none;cursor:pointer;font-size:12px;font-weight:600;background:transparent;color:#64748b;transition:all .15s;display:flex;align-items:center;gap:6px;}
+.ch-btn:hover{color:#1e293b;}
+.ch-btn.active{background:white;color:#1e293b;box-shadow:0 1px 3px rgba(0,0,0,0.1);}
+.ch-btn.active.all{color:#1e293b;}
+.ch-btn.active.out{color:#2563eb;}
+.ch-btn.active.inb{color:#0891b2;}
+.ch-count{font-size:10px;font-weight:700;padding:1px 6px;border-radius:8px;}
+.ch-btn.active.all .ch-count{background:#e2e8f0;color:#1e293b;}
+.ch-btn.active.out .ch-count{background:#dbeafe;color:#2563eb;}
+.ch-btn.active.inb .ch-count{background:#cffafe;color:#0e7490;}
+.ch-pip{width:7px;height:7px;border-radius:50%;}
+.pip-out{background:#2563eb;}
+.pip-inb{background:#0891b2;}
+
+/* KPI STRIP */
+.kpi-strip{background:white;display:grid;grid-template-columns:repeat(7,1fr);border-bottom:2px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.05);}
+.kpi{padding:12px 14px;text-align:center;border-right:1px solid #f1f5f9;cursor:default;}
+.kpi:last-child{border-right:none;}
+.kpi-val{font-size:28px;font-weight:800;line-height:1;}
+.kpi-lbl{font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:0.8px;margin-top:2px;}
+.kpi-sub{font-size:10px;color:#64748b;margin-top:1px;}
+.kpi.c-total .kpi-val{color:#1e293b;}
+.kpi.c-active .kpi-val{color:#16a34a;}
+.kpi.c-warn .kpi-val{color:#d97706;}
+.kpi.c-stale .kpi-val{color:#dc2626;}
+.kpi.c-opp .kpi-val{color:#7c3aed;}
+.kpi.c-week .kpi-val{color:#0284c7;}
+.kpi.c-drop .kpi-val{color:#64748b;}
+
+/* MAIN */
+.main{padding:18px 24px;max-width:1440px;margin:0 auto;}
+
+/* ALERT */
+.alert{background:#fef2f2;border:1px solid #fecaca;border-left:4px solid #dc2626;border-radius:0 8px 8px 0;padding:11px 16px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+.alert-txt .at{font-weight:700;color:#991b1b;font-size:13px;}
+.alert-txt .as{color:#dc2626;font-size:11px;margin-top:1px;}
+.alert-chips{display:flex;gap:7px;flex-wrap:wrap;}
+.a-chip{background:#fee2e2;border:1px solid #fecaca;color:#991b1b;padding:3px 11px;border-radius:20px;font-size:11px;font-weight:600;}
+.a-chip-drop{background:#f1f5f9;border:1px solid #e2e8f0;color:#64748b;padding:3px 11px;border-radius:20px;font-size:11px;font-weight:600;}
+
+/* TABS */
+.tabs{display:flex;gap:0;border-bottom:2px solid #e2e8f0;margin-bottom:18px;}
+.tab{padding:10px 18px;cursor:pointer;font-size:12px;font-weight:600;color:#64748b;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .15s;user-select:none;letter-spacing:0.2px;}
+.tab:hover{color:#1e293b;}
+.tab.active{color:#2563eb;border-bottom-color:#2563eb;}
+.tbc{display:inline-block;background:#e2e8f0;color:#64748b;border-radius:10px;padding:0 6px;font-size:10px;font-weight:700;margin-left:4px;line-height:16px;}
+.tab.active .tbc{background:#dbeafe;color:#2563eb;}
+.tab-content{display:none;}
+.tab-content.active{display:block;}
+
+/* GRID */
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:16px;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+.g21{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:16px;}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+
+/* CARD */
+.card{background:white;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,0.07),0 1px 2px rgba(0,0,0,0.04);overflow:hidden;margin-bottom:16px;}
+.card:last-child{margin-bottom:0;}
+.ch{padding:13px 16px;border-bottom:1px solid #f1f5f9;display:flex;align-items:center;justify-content:space-between;}
+.ch .ct{font-weight:700;font-size:13px;color:#1e293b;}
+.ch .cs{font-size:10px;color:#94a3b8;margin-top:1px;}
+.cbadge{background:#f1f5f9;color:#64748b;padding:3px 9px;border-radius:5px;font-size:11px;font-weight:600;}
+.cb{padding:14px 16px;}
+.cb-sm{padding:10px 16px;}
+
+/* BADGES */
+.bdg{display:inline-block;padding:2px 9px;border-radius:10px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.4px;}
+.b-active{background:#dcfce7;color:#166534;}
+.b-paused{background:#fef9c3;color:#854d0e;}
+.b-stale{background:#fee2e2;color:#991b1b;}
+.b-dropped{background:#f1f5f9;color:#475569;border:1px solid #e2e8f0;}
+.b-opp{background:#ede9fe;color:#5b21b6;}
+.b-lead{background:#f0f9ff;color:#0369a1;}
+.b-yes{background:#dcfce7;color:#166534;}
+.b-no{background:#f8fafc;color:#94a3b8;border:1px solid #e2e8f0;}
+.b-nobudget{background:#fff7ed;color:#c2410c;border:1px solid #fed7aa;}
+.b-out{background:#dbeafe;color:#1d4ed8;font-size:9px;padding:1px 6px;}
+.b-inb{background:#cffafe;color:#0e7490;font-size:9px;padding:1px 6px;}
+
+/* PROGRESS */
+.prog-wrap{display:flex;justify-content:space-between;font-size:11px;color:#64748b;margin-bottom:3px;}
+.prog-track{width:100%;height:7px;background:#f1f5f9;border-radius:4px;overflow:hidden;}
+.prog-fill{height:100%;border-radius:4px;}
+
+/* OWNER */
+.ow-pill{display:inline-flex;align-items:center;gap:5px;font-size:11px;}
+.ow-av{width:20px;height:20px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:white;flex-shrink:0;}
+.av-ss{background:#2563eb;}
+.av-va{background:#7c3aed;}
+.av-pk{background:#0891b2;}
+
+/* STALE BAR */
+.sb-wrap{display:flex;align-items:center;gap:7px;}
+.sb{width:56px;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden;}
+.sb-fill{height:100%;border-radius:3px;}
+
+/* STATUS BLOCKS */
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+.stat-block{text-align:center;padding:12px 6px;border-radius:8px;}
+.sb-active{background:#f0fdf4;border:1px solid #bbf7d0;}
+.sb-paused{background:#fefce8;border:1px solid #fde68a;}
+.sb-stale{background:#fef2f2;border:1px solid #fecaca;}
+.sb-dropped{background:#f8fafc;border:1px solid #e2e8f0;}
+.sbn{font-size:26px;font-weight:800;line-height:1;}
+.sb-active .sbn{color:#16a34a;}
+.sb-paused .sbn{color:#d97706;}
+.sb-stale .sbn{color:#dc2626;}
+.sb-dropped .sbn{color:#64748b;}
+.sbname{font-size:10px;font-weight:700;margin-top:4px;text-transform:uppercase;letter-spacing:0.5px;}
+.sb-active .sbname{color:#166534;}
+.sb-paused .sbname{color:#854d0e;}
+.sb-stale .sbname{color:#991b1b;}
+.sb-dropped .sbname{color:#475569;}
+.sbdesc{font-size:10px;color:#94a3b8;margin-top:2px;}
+
+/* CHANNEL SPLIT */
+.ch-split{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;}
+.ch-split-block{border-radius:8px;padding:12px;}
+.csb-out{background:#eff6ff;border:1px solid #bfdbfe;}
+.csb-inb{background:#ecfeff;border:1px solid #a5f3fc;}
+.csb-num{font-size:24px;font-weight:800;line-height:1;}
+.csb-out .csb-num{color:#2563eb;}
+.csb-inb .csb-num{color:#0891b2;}
+.csb-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-top:2px;}
+.csb-out .csb-lbl{color:#1d4ed8;}
+.csb-inb .csb-lbl{color:#0e7490;}
+.csb-detail{font-size:10px;color:#64748b;margin-top:3px;}
+
+/* FOCUS LIST */
+.fi{display:flex;align-items:flex-start;gap:11px;padding:9px 0;border-bottom:1px solid #f8fafc;}
+.fi:last-child{border-bottom:none;}
+.fi-rank{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;margin-top:1px;}
+.r-red{background:#fee2e2;color:#dc2626;}
+.r-amber{background:#fef9c3;color:#d97706;}
+.r-green{background:#dcfce7;color:#16a34a;}
+.r-purple{background:#ede9fe;color:#7c3aed;}
+.r-teal{background:#cffafe;color:#0e7490;}
+.r-gray{background:#f1f5f9;color:#64748b;}
+.fi-name{font-weight:700;font-size:12px;color:#1e293b;}
+.fi-co{font-size:11px;color:#64748b;}
+.fi-reason{font-size:10px;margin-top:2px;}
+.fi-days{font-size:11px;font-weight:700;margin-left:auto;flex-shrink:0;padding-left:8px;margin-top:1px;}
+
+/* TABLE */
+.filter-bar{display:flex;gap:7px;align-items:center;flex-wrap:wrap;padding:12px 16px;background:#f8fafc;border-bottom:1px solid #f1f5f9;}
+.srch{border:1px solid #e2e8f0;border-radius:6px;padding:6px 10px;font-size:12px;outline:none;width:200px;color:#1e293b;}
+.srch:focus{border-color:#2563eb;box-shadow:0 0 0 2px rgba(37,99,235,0.1);}
+.fbtn{border:1px solid #e2e8f0;border-radius:6px;padding:5px 10px;font-size:11px;cursor:pointer;background:white;color:#64748b;font-weight:500;transition:all .15s;}
+.fbtn:hover,.fbtn.af{background:#2563eb;color:white;border-color:#2563eb;}
+.fbtn.af-teal{background:#0891b2 !important;border-color:#0891b2 !important;color:white;}
+.fsep{color:#e2e8f0;font-size:14px;}
+table{width:100%;border-collapse:collapse;}
+thead th{background:#f8fafc;padding:8px 12px;text-align:left;font-size:10px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.6px;border-bottom:2px solid #e2e8f0;white-space:nowrap;cursor:pointer;user-select:none;}
+thead th:hover{background:#f1f5f9;color:#1e293b;}
+tbody tr{border-bottom:1px solid #f1f5f9;transition:background .1s;}
+tbody tr:hover{background:#f8fafc;}
+tbody td{padding:9px 12px;font-size:12px;vertical-align:middle;}
+tbody tr.row-inb{border-left:2px solid #a5f3fc;}
+tbody tr.row-out{border-left:2px solid #bfdbfe;}
+tbody tr.row-dropped{opacity:0.65;}
+
+/* WEEK GRID */
+.wk-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-bottom:16px;}
+.wk-day{text-align:center;}
+.wk-lbl{font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;}
+.wk-num{font-size:20px;font-weight:800;color:#1e293b;line-height:1;margin-bottom:6px;}
+.wk-today .wk-lbl,.wk-today .wk-num{color:#2563eb;}
+.wk-act{display:flex;align-items:flex-start;gap:5px;background:#f0f9ff;border-radius:6px;padding:5px 7px;margin-bottom:4px;text-align:left;}
+.wk-act-inb{background:#ecfeff;}
+.wk-act-reply{background:#f0fdf4;}
+.wk-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:3px;}
+.wk-txt{font-size:10px;color:#0369a1;font-weight:600;line-height:1.3;}
+.wk-txt-inb{color:#0e7490;}
+.wk-txt-reply{color:#166534;}
+.wk-none{color:#cbd5e1;font-size:11px;padding:6px 0;}
+
+/* TIMELINE */
+.tl-legend{display:flex;gap:14px;margin-bottom:16px;flex-wrap:wrap;}
+.tl-li{display:flex;align-items:center;gap:6px;font-size:11px;color:#64748b;}
+.tl-dot{width:11px;height:11px;border-radius:50%;border:2px solid white;box-shadow:0 1px 2px rgba(0,0,0,0.15);}
+.tl-item{margin-bottom:22px;}
+.tl-hdr{display:flex;align-items:center;gap:8px;margin-bottom:7px;flex-wrap:wrap;}
+.tl-track{position:relative;height:30px;background:#f8fafc;border-radius:15px;border:1px solid #e2e8f0;}
+.tl-section-lbl{font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.8px;padding:8px 0 4px;border-top:2px solid #f1f5f9;margin-top:4px;margin-bottom:12px;}
+.tl-section-lbl:first-child{border-top:none;margin-top:0;}
+
+/* SUMMARY CHIPS */
+.sumbar{background:white;border-radius:10px;padding:14px 16px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,0.06);}
+.sumbar-title{font-weight:700;font-size:13px;color:#1e293b;margin-bottom:10px;}
+.sum-chips{display:flex;gap:8px;flex-wrap:wrap;}
+.sum-chip{display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:20px;font-size:11px;font-weight:600;}
+.sc-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.sc-opp{background:#ede9fe;color:#5b21b6;}.sc-opp .sc-dot{background:#7c3aed;}
+.sc-stale{background:#fef2f2;color:#991b1b;}.sc-stale .sc-dot{background:#dc2626;}
+.sc-active{background:#f0fdf4;color:#166534;}.sc-active .sc-dot{background:#16a34a;}
+.sc-paused{background:#fefce8;color:#854d0e;}.sc-paused .sc-dot{background:#d97706;}
+.sc-drop{background:#f1f5f9;color:#475569;}.sc-drop .sc-dot{background:#94a3b8;}
+.sc-inb{background:#ecfeff;color:#0e7490;}.sc-inb .sc-dot{background:#0891b2;}
+
+/* TASK ITEM */
+.tk-item{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid #f1f5f9;}
+.tk-item:last-child{border-bottom:none;}
+.tk-ico{width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.tk-call{background:#dbeafe;}
+.tk-todo{background:#fef9c3;}
+.tk-sub{font-weight:600;font-size:12px;color:#1e293b;}
+.tk-dt{font-size:10px;color:#64748b;margin-top:1px;}
+
+/* STALE CARDS */
+.stale-card{border:1px solid #fecaca;border-top:3px solid #dc2626;border-radius:8px;padding:13px;background:#fef9f9;}
+.stale-card.drop-card{border-color:#e2e8f0;border-top-color:#94a3b8;background:#f8fafc;}
+.sc-days{font-weight:800;color:#dc2626;font-size:18px;}
+.drop-card .sc-days{color:#64748b;}
+.sc-name{font-weight:700;font-size:13px;margin-top:3px;}
+.sc-co{color:#64748b;font-size:11px;}
+.sc-note{font-size:10px;color:#94a3b8;margin-top:3px;}
+
+/* INSIGHT CARDS */
+.insight{border-radius:7px;padding:11px;margin-bottom:9px;}
+.insight:last-child{margin-bottom:0;}
+.ins-title{font-weight:700;font-size:12px;}
+.ins-body{font-size:11px;margin-top:2px;opacity:0.85;}
+.ins-blue{background:#eff6ff;border-left:3px solid #2563eb;}.ins-blue .ins-title{color:#1d4ed8;}.ins-blue .ins-body{color:#3b82f6;}
+.ins-green{background:#f0fdf4;border-left:3px solid #16a34a;}.ins-green .ins-title{color:#166534;}.ins-green .ins-body{color:#16a34a;}
+.ins-amber{background:#fefce8;border-left:3px solid #d97706;}.ins-amber .ins-title{color:#854d0e;}.ins-amber .ins-body{color:#d97706;}
+.ins-purple{background:#ede9fe;border-left:3px solid #7c3aed;}.ins-purple .ins-title{color:#5b21b6;}.ins-purple .ins-body{color:#7c3aed;}
+.ins-teal{background:#ecfeff;border-left:3px solid #0891b2;}.ins-teal .ins-title{color:#0e7490;}.ins-teal .ins-body{color:#0891b2;}
+.ins-red{background:#fef2f2;border-left:3px solid #dc2626;}.ins-red .ins-title{color:#991b1b;}.ins-red .ins-body{color:#dc2626;}
+
+/* HISTORY TABLE */
+.hist-wk{border:1px solid #e2e8f0;border-radius:8px;padding:12px;background:#f8fafc;}
+.hw-date{font-size:10px;color:#94a3b8;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;}
+.hw-contacts{font-size:12px;font-weight:500;margin-top:3px;color:#1e293b;}
+.hw-note{font-size:10px;color:#64748b;margin-top:2px;}
+
+a.hs-link{font-size:11px;color:#2563eb;text-decoration:none;font-weight:600;}
+a.hs-link:hover{text-decoration:underline;}
+a.clink{color:#1e293b;text-decoration:none;font-weight:700;display:flex;align-items:center;gap:4px;}
+a.clink:hover{color:#2563eb;text-decoration:underline;}
+a.clink::after{content:'↗';font-size:9px;color:#94a3b8;opacity:0;}
+a.clink:hover::after{opacity:1;color:#2563eb;}
+a.nlink{color:inherit;text-decoration:none;font-weight:700;}
+a.nlink:hover{color:#2563eb;text-decoration:underline;}
+
+::-webkit-scrollbar{width:5px;height:5px;}
+::-webkit-scrollbar-track{background:#f1f5f9;}
+::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:3px;}
+::-webkit-scrollbar-thumb:hover{background:#94a3b8;}
+
+@media(max-width:1200px){.kpi-strip{grid-template-columns:repeat(4,1fr);}.g3{grid-template-columns:1fr 1fr;}}
+@media(max-width:768px){.kpi-strip{grid-template-columns:repeat(2,1fr);}.g3,.g2,.g21{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="top-header">
+  <div class="hdr-left">
+    <span class="hdr-logo">SSS UK</span>
+    <div>
+      <div class="hdr-title">Shubham Overview</div>
+      <div class="hdr-seg">Segment: SSS_UK_Active Outbound (14) &nbsp;+&nbsp; SSS_UK_Active Inbound (3) &nbsp;·&nbsp; 17 Contacts &nbsp;·&nbsp; Weekly Assessment</div>
+    </div>
+  </div>
+  <div class="hdr-right">
+    <span class="live-dot">HubSpot Live</span>
+    <div class="hdr-date">📅 &nbsp;Friday, 27 Feb 2026</div>
+  </div>
+</div>
+
+<!-- CHANNEL SWITCHER -->
+<div class="ch-switch-bar">
+  <span class="ch-switch-label">View:</span>
+  <div class="ch-btns">
+    <button class="ch-btn active all" onclick="setChannel('all',this)">
+      All Contacts <span class="ch-count">17</span>
+    </button>
+    <button class="ch-btn out" onclick="setChannel('out',this)">
+      <span class="ch-pip pip-out"></span>📤 Outbound <span class="ch-count">14</span>
+    </button>
+    <button class="ch-btn inb" onclick="setChannel('inb',this)">
+      <span class="ch-pip pip-inb"></span>📥 Inbound <span class="ch-count">3</span>
+    </button>
+  </div>
+  <span style="font-size:11px;color:#94a3b8;margin-left:12px;" id="chLabel">Showing all 17 contacts across both segments</span>
+</div>
+
+<!-- KPI STRIP (dynamic) -->
+<div class="kpi-strip" id="kpiStrip">
+  <div class="kpi c-total"><div class="kpi-val" id="k-total">17</div><div class="kpi-lbl">Total Contacts</div><div class="kpi-sub" id="k-total-sub">14 out · 3 in</div></div>
+  <div class="kpi c-active"><div class="kpi-val" id="k-active">5</div><div class="kpi-lbl">Active</div><div class="kpi-sub">≤7 days</div></div>
+  <div class="kpi c-warn"><div class="kpi-val" id="k-warm">7</div><div class="kpi-lbl">Warming</div><div class="kpi-sub">8–13 days</div></div>
+  <div class="kpi c-stale"><div class="kpi-val" id="k-stale">4</div><div class="kpi-lbl">Stale</div><div class="kpi-sub">14+ days silent</div></div>
+  <div class="kpi c-drop"><div class="kpi-val" id="k-drop">1</div><div class="kpi-lbl">Dropped</div><div class="kpi-sub" id="k-drop-sub">Simon Balaj</div></div>
+  <div class="kpi c-opp"><div class="kpi-val" id="k-opp">2</div><div class="kpi-lbl">Opportunities</div><div class="kpi-sub" id="k-opp-sub">Nina · Gladson</div></div>
+  <div class="kpi c-week"><div class="kpi-val" id="k-week">5</div><div class="kpi-lbl">This Week</div><div class="kpi-sub">interactions Feb 23–27</div></div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- STALE ALERT -->
+  <div class="alert" id="alertBanner">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <span style="font-size:20px;">🔴</span>
+      <div class="alert-txt">
+        <div class="at">4 Outbound Contacts Going Stale + 1 Dropped Inbound — Action Required</div>
+        <div class="as">Outbound: 14+ days silent · Inbound: Simon Balaj disqualified (Product doesn't meet requirements)</div>
+      </div>
+    </div>
+    <div class="alert-chips">
+      <span class="a-chip">🎨 Marv Creative · 15d</span>
+      <span class="a-chip">🛍 Beauty Bay · 14d</span>
+      <span class="a-chip">👟 TOFS · 14d</span>
+      <span class="a-chip">🛒 Booths · 14d</span>
+      <span class="a-chip-drop">❌ Tachys Capital · dropped</span>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <div class="tab active" onclick="showTab('overview',this)">Overview</div>
+    <div class="tab" onclick="showTab('contacts',this)">All Contacts <span class="tbc" id="tab-contacts-count">17</span></div>
+    <div class="tab" onclick="showTab('focus',this)">Daily Focus <span class="tbc">9</span></div>
+    <div class="tab" onclick="showTab('timelines',this)">Account Timelines</div>
+    <div class="tab" onclick="showTab('weekly',this)">Weekly Log</div>
+  </div>
+
+  <!-- ===== TAB: OVERVIEW ===== -->
+  <div class="tab-content active" id="tab-overview">
+
+    <!-- Summary chips -->
+    <div class="sumbar">
+      <div class="sumbar-title">📊 Week of Feb 23–27, 2026 — Executive Snapshot</div>
+      <div class="sum-chips">
+        <div class="sum-chip sc-inb"><span class="sc-dot"></span>📥 Inbound: 2 Opportunities (Gladson @ Arkmedes · Nina @ Nina D)</div>
+        <div class="sum-chip sc-opp"><span class="sc-dot"></span>2 Opportunities total — Nina (outbound) + Gladson (inbound)</div>
+        <div class="sum-chip sc-stale"><span class="sc-dot"></span>4 Stale outbound — Beauty Bay, TOFS, Booths, Marv Creative need urgent re-engagement</div>
+        <div class="sum-chip sc-active"><span class="sc-dot"></span>5 Active this week — 3 outbound + 2 inbound interactions logged</div>
+        <div class="sum-chip sc-drop"><span class="sc-dot"></span>1 Dropped — Simon Balaj (Tachys Capital) disqualified: product fit issue</div>
+      </div>
+    </div>
+
+    <div class="g3">
+      <!-- Conversation Status -->
+      <div class="card">
+        <div class="ch"><div><div class="ct">Conversation Status</div><div class="cs" id="ov-status-sub">All 17 contacts · both segments</div></div></div>
+        <div class="cb">
+          <div class="stat-grid">
+            <div class="stat-block sb-active"><div class="sbn" id="ov-active">5</div><div class="sbname">Active</div><div class="sbdesc">≤7 days</div></div>
+            <div class="stat-block sb-paused"><div class="sbn" id="ov-warm">7</div><div class="sbname">Warming</div><div class="sbdesc">8–13 days</div></div>
+            <div class="stat-block sb-stale"><div class="sbn" id="ov-stale">4</div><div class="sbname">Stale</div><div class="sbdesc">14+ days</div></div>
+            <div class="stat-block sb-dropped"><div class="sbn" id="ov-drop">1</div><div class="sbname">Dropped</div><div class="sbdesc">disqualified</div></div>
+          </div>
+          <div style="margin-top:14px;">
+            <div class="prog-wrap"><span>Reply Rate</span><span style="font-weight:700;color:#16a34a;" id="ov-reply-lbl">9 / 17 (53%)</span></div>
+            <div class="prog-track"><div class="prog-fill" id="ov-reply-bar" style="width:53%;background:#22c55e;"></div></div>
+          </div>
+          <div style="margin-top:8px;">
+            <div class="prog-wrap"><span>Touched This Week</span><span style="font-weight:700;color:#0284c7;" id="ov-week-lbl">5 / 17 (29%)</span></div>
+            <div class="prog-track"><div class="prog-fill" id="ov-week-bar" style="width:29%;background:#0284c7;"></div></div>
+          </div>
+          <div style="margin-top:8px;">
+            <div class="prog-wrap"><span>At Opportunity Stage</span><span style="font-weight:700;color:#7c3aed;" id="ov-opp-lbl">2 / 17 (12%)</span></div>
+            <div class="prog-track"><div class="prog-fill" id="ov-opp-bar" style="width:12%;background:#7c3aed;"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Channel Split -->
+      <div class="card">
+        <div class="ch"><div><div class="ct">Channel Split</div><div class="cs">Inbound vs Outbound breakdown</div></div></div>
+        <div class="cb">
+          <div class="ch-split">
+            <div class="ch-split-block csb-out">
+              <div class="csb-num">14</div>
+              <div class="csb-lbl">📤 Outbound</div>
+              <div class="csb-detail">1 Opp · 4 Stale · 7 Warming</div>
+            </div>
+            <div class="ch-split-block csb-inb">
+              <div class="csb-num">3</div>
+              <div class="csb-lbl">📥 Inbound</div>
+              <div class="csb-detail">1 Opp · 1 Active · 1 Dropped</div>
+            </div>
+          </div>
+          <div style="margin-top:4px;">
+            <div class="prog-wrap"><span>Inbound Reply Rate</span><span style="font-weight:700;color:#0891b2;">2 / 3 (67%)</span></div>
+            <div class="prog-track"><div class="prog-fill" style="width:67%;background:#0891b2;"></div></div>
+          </div>
+          <div style="margin-top:8px;">
+            <div class="prog-wrap"><span>Outbound Reply Rate</span><span style="font-weight:700;color:#2563eb;">7 / 14 (50%)</span></div>
+            <div class="prog-track"><div class="prog-fill" style="width:50%;background:#2563eb;"></div></div>
+          </div>
+          <div style="margin-top:10px;padding:8px 10px;background:#ecfeff;border-radius:6px;border:1px solid #a5f3fc;">
+            <div style="font-size:11px;color:#0e7490;">💡 Inbound outperforming on reply rate (67% vs 50%) and conversion (33% vs 7% opportunity rate)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Owner Breakdown -->
+      <div class="card">
+        <div class="ch"><div><div class="ct">Owner Breakdown</div><div class="cs">3 owners across both segments</div></div></div>
+        <div class="cb">
+          <div style="margin-bottom:12px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+              <div class="ow-pill"><span class="ow-av av-ss">SS</span><span style="font-weight:700;">Shubham Soni</span></div>
+              <span style="font-weight:800;font-size:20px;color:#2563eb;">13</span>
+            </div>
+            <div class="prog-track"><div class="prog-fill" style="width:76%;background:#2563eb;"></div></div>
+            <div style="display:flex;gap:8px;margin-top:3px;font-size:10px;color:#64748b;flex-wrap:wrap;">
+              <span style="color:#16a34a;">● 3 active</span><span style="color:#d97706;">● 6 warm</span><span style="color:#dc2626;">● 4 stale</span><span style="color:#7c3aed;">● 1 opp</span>
+            </div>
+          </div>
+          <div style="margin-bottom:12px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+              <div class="ow-pill"><span class="ow-av av-va">VA</span><span style="font-weight:700;">Vipul Aggarwal</span></div>
+              <span style="font-weight:800;font-size:20px;color:#7c3aed;">3</span>
+            </div>
+            <div class="prog-track"><div class="prog-fill" style="width:18%;background:#7c3aed;"></div></div>
+            <div style="display:flex;gap:8px;margin-top:3px;font-size:10px;color:#64748b;">
+              <span style="color:#16a34a;">● 3 active</span><span style="color:#7c3aed;">● 1 opp (Gladson)</span>
+            </div>
+          </div>
+          <div>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+              <div class="ow-pill"><span class="ow-av av-pk">PK</span><span style="font-weight:700;">Pradeep Kumar</span></div>
+              <span style="font-weight:800;font-size:20px;color:#0891b2;">1</span>
+            </div>
+            <div class="prog-track"><div class="prog-fill" style="width:6%;background:#0891b2;"></div></div>
+            <div style="font-size:10px;color:#64748b;margin-top:3px;"><span style="color:#475569;">● 1 dropped (Simon Balaj — product fit)</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stale + Dropped cards -->
+    <div class="card">
+      <div class="ch"><div><div class="ct">🔥 Stale &amp; Dropped — Requires Action Today</div><div class="cs">4 stale (outbound) + 1 dropped (inbound) — sorted by urgency</div></div></div>
+      <div class="cb">
+        <div class="g4" style="margin-bottom:0;">
+          <div class="stale-card">
+            <div class="sc-days">15 days</div>
+            <div class="sc-name"><a href="https://app-na2.hubspot.com/contacts/49150562/record/0-1/425404108532" target="_blank" class="nlink">Marco Vaghetti ↗</a></div>
+            <div class="sc-co">Marv Creative</div>
+            <div class="sc-note">Contacted once on creation day — no follow-up ever sent</div>
+            <div style="margin-top:6px;display:flex;gap:4px;flex-wrap:wrap;"><span class="bdg b-no">No reply</span><span class="bdg b-out">OUT</span></div>
+            <div style="margin-top:5px;"><span class="ow-pill"><span class="ow-av av-ss" style="width:16px;height:16px;font-size:8px;">SS</span><span style="font-size:10px;color:#64748b;">Shubham</span></span></div>
+          </div>
+          <div class="stale-card">
+            <div class="sc-days">14 days</div>
+            <div class="sc-name"><a href="https://app-na2.hubspot.com/contacts/49150562/record/0-1/384558516936" target="_blank" class="nlink">Rose Andrews ↗</a></div>
+            <div class="sc-co">Beauty Bay</div>
+            <div class="sc-note">High-value brand — large potential, no traction yet</div>
+            <div style="margin-top:6px;display:flex;gap:4px;flex-wrap:wrap;"><span class="bdg b-no">No reply</span><span class="bdg b-out">OUT</span></div>
+            <div style="margin-top:5px;"><span class="ow-pill"><span class="ow-av av-ss" style="width:16px;height:16px;font-size:8px;">SS</span><span style="font-size:10px;color:#64748b;">Shubham</span></span></div>
+          </div>
+          <div class="stale-card">
+            <div class="sc-days">14 days</div>
+            <div class="sc-name"><a href="https://app-na2.hubspot.com/contacts/49150562/record/0-1/400990724817" target="_blank" class="nlink">Simon Kniveton ↗</a></div>
+            <div class="sc-co">TOFS</div>
+            <div class="sc-note">Last touched Feb 13 — try new channel or value angle</div>
+            <div style="margin-top:6px;display:flex;gap:4px;flex-wrap:wrap;"><span class="bdg b-no">No reply</span><span class="bdg b-out">OUT</span></div>
+            <div style="margin-top:5px;"><span class="ow-pill"><span class="ow-av av-ss" style="width:16px;height:16px;font-size:8px;">SS</span><span style="font-size:10px;color:#64748b;">Shubham</span></span></div>
+          </div>
+          <div class="stale-card">
+            <div class="sc-days">14 days</div>
+            <div class="sc-name"><a href="https://app-na2.hubspot.com/contacts/49150562/record/0-1/400986521294" target="_blank" class="nlink">Nigel Cokell ↗</a></div>
+            <div class="sc-co">Booths</div>
+            <div class="sc-note">Last touched Feb 13 — LinkedIn or case study email</div>
+            <div style="margin-top:6px;display:flex;gap:4px;flex-wrap:wrap;"><span class="bdg b-no">No reply</span><span class="bdg b-out">OUT</span></div>
+            <div style="margin-top:5px;"><span class="ow-pill"><span class="ow-av av-ss" style="width:16px;height:16px;font-size:8px;">SS</span><span style="font-size:10px;color:#64748b;">Shubham</span></span></div>
+          </div>
+        </div>
+        <!-- Dropped inbound -->
+        <div style="margin-top:12px;border-top:1px solid #f1f5f9;padding-top:12px;">
+          <div style="font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">📥 Inbound — Dropped / Disqualified</div>
+          <div class="stale-card drop-card" style="max-width:360px;">
+            <div class="sc-days">23 days</div>
+            <div class="sc-name"><a href="https://app-na2.hubspot.com/contacts/49150562/record/0-1/413041060539" target="_blank" class="nlink" style="color:#475569;">Simon Balaj ↗</a></div>
+            <div class="sc-co">Tachys Capital</div>
+            <div class="sc-note">Lead status: "Product doesn't meet the requirements" — consider archiving or moving to disqualified list</div>
+            <div style="margin-top:6px;display:flex;gap:4px;flex-wrap:wrap;"><span class="bdg b-dropped">Dropped</span><span class="bdg b-inb">IN</span></div>
+            <div style="margin-top:5px;"><span class="ow-pill"><span class="ow-av av-pk" style="width:16px;height:16px;font-size:8px;">PK</span><span style="font-size:10px;color:#64748b;">Pradeep</span></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Upcoming Tasks -->
+    <div class="card">
+      <div class="ch"><div><div class="ct">Upcoming Tasks</div><div class="cs">Scheduled follow-ups</div></div><span class="cbadge">2 upcoming</span></div>
+      <div class="cb-sm" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div>
+          <div class="tk-item">
+            <div class="tk-ico tk-call">📞</div>
+            <div>
+              <div class="tk-sub">Call Caroline Fjörd</div>
+              <div class="tk-dt">📅 Wed, 4 March 2026 · 2:30 AM UTC</div>
+            </div>
+          </div>
+          <div class="tk-item">
+            <div class="tk-ico tk-todo">✅</div>
+            <div>
+              <div class="tk-sub">Follow up with Inna Merenkova</div>
+              <div class="tk-dt">📅 Fri, 27 March 2026 · <span class="bdg b-inb">INBOUND</span></div>
+            </div>
+          </div>
+        </div>
+        <div style="background:#fef2f2;border-radius:8px;padding:10px;">
+          <div style="font-size:11px;color:#dc2626;font-weight:600;margin-bottom:4px;">⚠️ Task Hygiene Alert</div>
+          <div style="font-size:11px;color:#991b1b;">35+ overdue tasks detected in your HubSpot account. Many are from Sep–Jan and have never been closed. A task audit is strongly recommended.</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /overview -->
+
+  <!-- ===== TAB: ALL CONTACTS ===== -->
+  <div class="tab-content" id="tab-contacts">
+    <div class="card">
+      <div class="ch">
+        <div><div class="ct">All Contacts — Inbound &amp; Outbound Combined</div><div class="cs">17 contacts · click column headers to sort · row colour = channel</div></div>
+        <div style="display:flex;gap:8px;">
+          <a class="hs-link" href="https://app-na2.hubspot.com/contacts/49150562/objectLists/1427" target="_blank">Outbound List ↗</a>
+          <a class="hs-link" href="https://app-na2.hubspot.com/contacts/49150562/objectLists/1426" target="_blank" style="color:#0891b2;">Inbound List ↗</a>
+        </div>
+      </div>
+      <div class="filter-bar">
+        <input type="text" class="srch" placeholder="🔍  Search name or company…" oninput="applyFilters()" id="srch">
+        <span class="fsep">|</span>
+        <button class="fbtn af" onclick="setF('all',this)">All (17)</button>
+        <button class="fbtn" onclick="setF('active',this)">Active (5)</button>
+        <button class="fbtn" onclick="setF('paused',this)">Warming (7)</button>
+        <button class="fbtn" onclick="setF('stale',this)">Stale (4)</button>
+        <button class="fbtn" onclick="setF('dropped',this)">Dropped (1)</button>
+        <span class="fsep">|</span>
+        <button class="fbtn" onclick="setC('out',this)">📤 Outbound (14)</button>
+        <button class="fbtn" onclick="setC('inb',this)" style="color:#0891b2;">📥 Inbound (3)</button>
+        <span class="fsep">|</span>
+        <button class="fbtn" onclick="setO('Shubham',this)">SS (13)</button>
+        <button class="fbtn" onclick="setO('Vipul',this)">VA (3)</button>
+        <button class="fbtn" onclick="setO('Pradeep',this)">PK (1)</button>
+      </div>
+      <div style="overflow-x:auto;">
+        <table id="ctable">
+          <thead>
+            <tr>
+              <th onclick="srt(0)">Contact ↕</th>
+              <th onclick="srt(1)">Company ↕</th>
+              <th>Ch.</th>
+              <th onclick="srt(3)">Owner ↕</th>
+              <th onclick="srt(4)">Created ↕</th>
+              <th onclick="srt(5)">Last Contacted ↕</th>
+              <th onclick="srt(6)">Last Replied ↕</th>
+              <th onclick="srt(7)">Days Silent ↕</th>
+              <th>Status</th>
+              <th>Stage</th>
+              <th>Reply</th>
+              <th>Lead Status</th>
+            </tr>
+          </thead>
+          <tbody id="ctbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TAB: DAILY FOCUS ===== -->
+  <div class="tab-content" id="tab-focus">
+    <div class="g21">
+      <div class="card">
+        <div class="ch"><div><div class="ct">🎯 Today's Priority Focus</div><div class="cs">Friday, 27 Feb 2026 — ranked by urgency across both segments</div></div></div>
+        <div class="cb" id="focusList"></div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:16px;">
+          <div class="ch"><div class="ct">💡 Action Insights</div></div>
+          <div class="cb">
+            <div class="insight ins-teal">
+              <div class="ins-title">📥 Inna Merenkova — No Budget flag</div>
+              <div class="ins-body">Inbound lead flagged "No budget" but only 4 days old. Worth a discovery call to understand if timing/budget changes — don't write off yet</div>
+            </div>
+            <div class="insight ins-green">
+              <div class="ins-title">🌟 Two Opportunities in pipeline</div>
+              <div class="ins-body">Nina Daniels (outbound) + Gladson B (inbound, "Working"). Both need active nurturing — propose next steps for each this week</div>
+            </div>
+            <div class="insight ins-blue">
+              <div class="ins-title">New angle for stale outbound</div>
+              <div class="ins-body">TOFS, Booths &amp; Beauty Bay — try a personalised case study or competitor win story. Standard nudge emails are likely being ignored</div>
+            </div>
+            <div class="insight ins-purple">
+              <div class="ins-title">Marco Vaghetti — start a sequence</div>
+              <div class="ins-body">Only ever contacted once (Feb 12). A proper 3-touch sequence should start today — email, then LinkedIn, then call</div>
+            </div>
+            <div class="insight ins-amber">
+              <div class="ins-title">Paul Morris &amp; Tom Armenante cooling</div>
+              <div class="ins-body">Both replied but 9–11 days without follow-up. They're drifting — reach out before this weekend</div>
+            </div>
+            <div class="insight ins-red">
+              <div class="ins-title">Simon Balaj — archive recommendation</div>
+              <div class="ins-body">23 days, disqualified (product fit). Consider moving out of active segment to keep pipeline clean. Flag for future re-evaluation</div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="ch"><div><div class="ct">📈 Engagement Scores</div><div class="cs">Composite: recency + reply + stage</div></div></div>
+          <div class="cb-sm" id="engBars"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TAB: ACCOUNT TIMELINES ===== -->
+  <div class="tab-content" id="tab-timelines">
+    <div class="card">
+      <div class="ch"><div><div class="ct">Account Journey Timelines</div><div class="cs">Jan 15 → Feb 27, 2026 · all 17 contacts · grouped by channel</div></div></div>
+      <div class="cb">
+        <div class="tl-legend">
+          <div class="tl-li"><div class="tl-dot" style="background:#94a3b8;"></div>Created</div>
+          <div class="tl-li"><div class="tl-dot" style="background:#3b82f6;"></div>Last Contacted</div>
+          <div class="tl-li"><div class="tl-dot" style="background:#22c55e;"></div>Last Replied</div>
+          <div class="tl-li"><div class="tl-dot" style="background:white;border:2px dashed #94a3b8;"></div>Today (Feb 27)</div>
+          <div class="tl-li"><span style="display:inline-block;width:18px;height:4px;background:#2563eb;border-radius:2px;opacity:0.4;"></span>Outbound</div>
+          <div class="tl-li"><span style="display:inline-block;width:18px;height:4px;background:#0891b2;border-radius:2px;opacity:0.4;"></span>Inbound</div>
+        </div>
+        <div id="tlContainer"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TAB: WEEKLY LOG ===== -->
+  <div class="tab-content" id="tab-weekly">
+
+    <div class="card">
+      <div class="ch"><div><div class="ct">📆 This Week — Feb 23–27, 2026</div><div class="cs">5 interactions logged across both segments</div></div></div>
+      <div class="cb">
+        <div class="wk-grid">
+          <div class="wk-day"><div class="wk-lbl">Mon</div><div class="wk-num">23</div>
+            <div class="wk-act wk-act-inb"><div class="wk-dot" style="background:#0891b2;"></div><div class="wk-txt wk-txt-inb"><a href="https://app-na2.hubspot.com/contacts/49150562/record/0-1/431083548408" target="_blank" style="color:#0e7490;text-decoration:none;font-weight:600;">Inna Merenkova</a><br><span style="color:#94a3b8;font-size:9px;">Insights · Shubham 📥</span></div></div>
+          </div>
+          <div class="wk-day"><div class="wk-lbl">Tue</div><div class="wk-num">24</div>
+            <div class="wk-act"><div class="wk-dot" style="background:#7c3aed;"></div><div class="wk-txt"><a href="https://app-na2.hubspot.com/contacts/49150562/record/0-1/416157062894" target="_blank" style="color:#0369a1;text-decoration:none;font-weight:600;">Liam Preston</a><br><span style="color:#94a3b8;font-size:9px;">New Balance · Vipul 📤</span></div></div>
+            <div class="wk-act wk-act-inb"><div class="wk-dot" style="background:#0891b2;"></div><div class="wk-txt wk-txt-inb"><a href="https://app-na2.hubspot.com/contacts/49150562/record/0-1/436317190886" target="_blank" style="color:#0e7490;text-decoration:none;font-weight:600;">Gladson B</a><br><span style="color:#94a3b8;font-size:9px;">Arkmedes · Vipul 📥</span></div></div>
+          </div>
+          <div class="wk-day"><div class="wk-lbl">Wed</div><div class="wk-num">25</div>
+            <div class="wk-act"><div class="wk-dot" style="background:#2563eb;"></div><div class="wk-txt"><a href="https://app-na2.hubspot.com/contacts/49150562/record/0-1/391395012320" target="_blank" style="color:#0369a1;text-decoration:none;font-weight:600;">Nina Daniels</a><br><span style="color:#94a3b8;font-size:9px;">Nina D · Shubham 📤</span></div></div>
+            <div class="wk-act wk-act-reply"><div class="wk-dot" style="background:#22c55e;"></div><div class="wk-txt wk-txt-reply"><a href="https://app-na2.hubspot.com/contacts/49150562/record/0-1/429153263316" target="_blank" style="color:#166534;text-decoration:none;font-weight:600;">Giles Smith</a> ↩ replied<br><span style="color:#94a3b8;font-size:9px;">Proj. Orange · Vipul 📤</span></div></div>
+          </div>
+          <div class="wk-day"><div class="wk-lbl">Thu</div><div class="wk-num">26</div><div class="wk-none">—</div></div>
+          <div class="wk-day wk-today"><div class="wk-lbl">Fri · Today</div><div class="wk-num">27</div>
+            <div class="wk-none" style="font-size:10px;color:#2563eb;">No touches yet<br>→ see Focus tab</div>
+          </div>
+          <div class="wk-day"><div class="wk-lbl">Sat</div><div class="wk-num">28</div><div class="wk-none">—</div></div>
+          <div class="wk-day"><div class="wk-lbl">Sun</div><div class="wk-num" style="font-size:14px;margin-top:4px;">1 Mar</div><div class="wk-none">—</div></div>
+        </div>
+        <div style="padding:10px;background:#ecfeff;border-radius:8px;border:1px solid #a5f3fc;">
+          <div style="font-size:11px;color:#0e7490;font-weight:600;">📥 Inbound activity this week: Gladson B (Arkmedes, replied Feb 24) + Inna Merenkova (touched Feb 23, replied Feb 20) — both engaged</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="ch"><div><div class="ct">Previous Week — Feb 16–22, 2026</div><div class="cs">9 outbound touches + Inna added to inbound segment</div></div></div>
+      <div class="cb">
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+          <div class="hist-wk">
+            <div class="hw-date">Mon, Feb 16</div>
+            <div class="hw-contacts">Giles Smith, Paul Morris, Daniel Barnes, Hilary Large, Adam Aubrey — 5 outbound touches + Inna Merenkova added to inbound</div>
+            <div class="hw-note">Heavy outreach day — 6 total contacts across channels</div>
+          </div>
+          <div class="hist-wk">
+            <div class="hw-date">Tue–Wed, Feb 17–18</div>
+            <div class="hw-contacts">Tom Armenante (replied Feb 17), Michaela Wray, Rennick Graham</div>
+            <div class="hw-note">3 outbound — Rennick newly added to segment</div>
+          </div>
+          <div class="hist-wk">
+            <div class="hw-date">Fri, Feb 20</div>
+            <div class="hw-contacts">Inna Merenkova replied (inbound)</div>
+            <div class="hw-note">📥 Inbound reply received — fast response from new contact</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="ch"><div><div class="ct">All-Time Activity Log</div><div class="cs">Complete touch history since Jan 15, 2026 · both segments</div></div></div>
+      <div style="overflow-x:auto;">
+        <table>
+          <thead><tr>
+            <th>Contact</th><th>Company</th><th>Ch.</th><th>Owner</th>
+            <th>Added</th><th>Last Touched</th><th>Last Reply</th>
+            <th>Days in Seg.</th><th>Status</th>
+          </tr></thead>
+          <tbody id="histBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div><!-- /weekly -->
+
+</div><!-- /main -->
+
+<script>
+const BASE_URL = "https://app-na2.hubspot.com/contacts/49150562/record/0-1/";
+
+// ---- ALL CONTACTS DATA ----
+const C = [
+  // OUTBOUND
+  {n:"Nina Daniels",co:"Nina D",ow:"Shubham Soni",owc:"Shubham",cr:"2026-01-20",lc:"2026-02-25",lr:"2026-02-16",ds:2,st:"active",lf:"Opportunity",rep:true,sc:92,id:"391395012320",ch:"out",ls:""},
+  {n:"Giles Smith",co:"Project Orange",ow:"Vipul Aggarwal",owc:"Vipul",cr:"2026-02-16",lc:"2026-02-16",lr:"2026-02-25",ds:2,st:"active",lf:"Lead",rep:true,sc:88,id:"429153263316",ch:"out",ls:""},
+  {n:"Liam Preston",co:"New Balance",ow:"Vipul Aggarwal",owc:"Vipul",cr:"2026-02-05",lc:"2026-02-24",lr:"2026-02-24",ds:3,st:"active",lf:"Lead",rep:true,sc:85,id:"416157062894",ch:"out",ls:""},
+  {n:"Rennick Graham",co:"BD-PM",ow:"Shubham Soni",owc:"Shubham",cr:"2026-02-17",lc:"2026-02-19",lr:null,ds:8,st:"paused",lf:"Lead",rep:false,sc:60,id:"431694521058",ch:"out",ls:""},
+  {n:"Tom Armenante",co:"GTSE",ow:"Shubham Soni",owc:"Shubham",cr:"2026-01-20",lc:"2026-02-18",lr:"2026-02-17",ds:9,st:"paused",lf:"Lead",rep:true,sc:65,id:"391380659912",ch:"out",ls:""},
+  {n:"Michaela Wray",co:"Radley & Co",ow:"Shubham Soni",owc:"Shubham",cr:"2026-01-27",lc:"2026-02-17",lr:null,ds:10,st:"paused",lf:"Lead",rep:false,sc:48,id:"400973752057",ch:"out",ls:""},
+  {n:"Paul Morris",co:"RS Group",ow:"Shubham Soni",owc:"Shubham",cr:"2026-01-20",lc:"2026-02-16",lr:"2026-02-16",ds:11,st:"paused",lf:"Lead",rep:true,sc:62,id:"391472901833",ch:"out",ls:""},
+  {n:"Daniel Barnes",co:"Pop Specs",ow:"Shubham Soni",owc:"Shubham",cr:"2026-02-03",lc:"2026-02-16",lr:null,ds:11,st:"paused",lf:"Lead",rep:false,sc:44,id:"412053204691",ch:"out",ls:""},
+  {n:"Hilary Large",co:"Wardrobe at the Cross",ow:"Shubham Soni",owc:"Shubham",cr:"2026-01-20",lc:"2026-02-16",lr:null,ds:11,st:"paused",lf:"Lead",rep:false,sc:42,id:"391479340771",ch:"out",ls:""},
+  {n:"Adam Aubrey",co:"Primo Marketplace",ow:"Shubham Soni",owc:"Shubham",cr:"2026-01-20",lc:"2026-02-16",lr:"2026-02-02",ds:11,st:"paused",lf:"Lead",rep:true,sc:55,id:"391405236983",ch:"out",ls:""},
+  {n:"Simon Kniveton",co:"TOFS",ow:"Shubham Soni",owc:"Shubham",cr:"2026-01-27",lc:"2026-02-13",lr:null,ds:14,st:"stale",lf:"Lead",rep:false,sc:22,id:"400990724817",ch:"out",ls:""},
+  {n:"Nigel Cokell",co:"Booths",ow:"Shubham Soni",owc:"Shubham",cr:"2026-01-27",lc:"2026-02-13",lr:null,ds:14,st:"stale",lf:"Lead",rep:false,sc:22,id:"400986521294",ch:"out",ls:""},
+  {n:"Rose Andrews",co:"Beauty Bay",ow:"Shubham Soni",owc:"Shubham",cr:"2026-01-15",lc:"2026-02-13",lr:null,ds:14,st:"stale",lf:"Lead",rep:false,sc:18,id:"384558516936",ch:"out",ls:""},
+  {n:"Marco Vaghetti",co:"Marv Creative",ow:"Shubham Soni",owc:"Shubham",cr:"2026-02-12",lc:"2026-02-12",lr:null,ds:15,st:"stale",lf:"Lead",rep:false,sc:12,id:"425404108532",ch:"out",ls:""},
+  // INBOUND
+  {n:"Gladson B",co:"Arkmedes",ow:"Vipul Aggarwal",owc:"Vipul",cr:"2026-02-21",lc:"2026-02-24",lr:"2026-02-24",ds:3,st:"active",lf:"Opportunity",rep:true,sc:90,id:"436317190886",ch:"inb",ls:"Working"},
+  {n:"Inna Merenkova",co:"Insights Lighthouse",ow:"Shubham Soni",owc:"Shubham",cr:"2026-02-16",lc:"2026-02-23",lr:"2026-02-20",ds:4,st:"active",lf:"Lead",rep:true,sc:68,id:"431083548408",ch:"inb",ls:"No budget"},
+  {n:"Simon Balaj",co:"Tachys Capital",ow:"Pradeep Kumar",owc:"Pradeep",cr:"2026-02-03",lc:"2026-02-04",lr:null,ds:23,st:"dropped",lf:"Lead",rep:false,sc:2,id:"413041060539",ch:"inb",ls:"Product doesn't fit"}
+];
+function hsUrl(c){return BASE_URL+c.id;}
+
+// ---- CHANNEL STATE ----
+let activeChannel = 'all';
+const KPI_DATA = {
+  all:  {total:17, sub:'14 out · 3 in', active:5, warm:7, stale:4, drop:1, dropSub:'Simon Balaj', opp:2, oppSub:'Nina · Gladson', week:5},
+  out:  {total:14, sub:'outbound only', active:3, warm:7, stale:4, drop:0, dropSub:'—', opp:1, oppSub:'Nina Daniels', week:3},
+  inb:  {total:3,  sub:'inbound only',  active:2, warm:0, stale:0, drop:1, dropSub:'Simon Balaj', opp:1, oppSub:'Gladson B', week:2}
+};
+function setChannel(ch, btn){
+  activeChannel = ch;
+  document.querySelectorAll('.ch-btn').forEach(b=>b.classList.remove('active','all','out','inb'));
+  btn.classList.add('active', ch);
+  const labels = {all:'Showing all 17 contacts across both segments', out:'Filtered to 14 outbound contacts only', inb:'Filtered to 3 inbound contacts only'};
+  document.getElementById('chLabel').textContent = labels[ch];
+  updateKPIs(ch);
+  applyFilters();
+  renderTimelines();
+}
+function updateKPIs(ch){
+  const d = KPI_DATA[ch];
+  document.getElementById('k-total').textContent = d.total;
+  document.getElementById('k-total-sub').textContent = d.sub;
+  document.getElementById('k-active').textContent = d.active;
+  document.getElementById('k-warm').textContent = d.warm;
+  document.getElementById('k-stale').textContent = d.stale;
+  document.getElementById('k-drop').textContent = d.drop;
+  document.getElementById('k-drop-sub').textContent = d.dropSub;
+  document.getElementById('k-opp').textContent = d.opp;
+  document.getElementById('k-opp-sub').textContent = d.oppSub;
+  document.getElementById('k-week').textContent = d.week;
+}
+
+// ---- HELPERS ----
+function sbadge(s){
+  if(s==='active') return '<span class="bdg b-active">Active</span>';
+  if(s==='paused') return '<span class="bdg b-paused">Warming</span>';
+  if(s==='dropped') return '<span class="bdg b-dropped">Dropped</span>';
+  return '<span class="bdg b-stale">Stale</span>';
+}
+function lfbadge(l){
+  return l==='Opportunity' ? '<span class="bdg b-opp">Opportunity</span>' : '<span class="bdg b-lead">Lead</span>';
+}
+function chbadge(ch){
+  return ch==='out' ? '<span class="bdg b-out">OUT</span>' : '<span class="bdg b-inb">IN</span>';
+}
+function lsbadge(ls){
+  if(!ls) return '';
+  if(ls==='No budget') return '<span class="bdg b-nobudget">No Budget</span>';
+  if(ls.includes("doesn't fit")||ls.includes("doesn't meet")) return '<span class="bdg b-dropped">Disqualified</span>';
+  if(ls==='Working') return '<span class="bdg b-yes">Working</span>';
+  return `<span class="bdg b-no" style="font-size:9px;">${ls}</span>`;
+}
+function owhtml(c){
+  const cls = c.owc==='Shubham'?'av-ss':c.owc==='Vipul'?'av-va':'av-pk';
+  const init = c.owc==='Shubham'?'SS':c.owc==='Vipul'?'VA':'PK';
+  return `<div class="ow-pill"><span class="ow-av ${cls}">${init}</span><span>${c.owc}</span></div>`;
+}
+function stalebar(d,st){
+  const pct=Math.min((d/25)*100,100);
+  const col=st==='dropped'?'#94a3b8':d>=14?'#dc2626':d>=7?'#d97706':'#22c55e';
+  return `<div class="sb-wrap"><div class="sb"><div class="sb-fill" style="width:${pct}%;background:${col};"></div></div><span style="font-weight:700;color:${col};">${d}d</span></div>`;
+}
+function daysSeg(cr){
+  return Math.round((new Date('2026-02-27')-new Date(cr))/(1000*60*60*24));
+}
+
+// ---- TABS ----
+function showTab(name,el){
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  el.classList.add('active');
+}
+
+// ---- CONTACTS TABLE ----
+let fStat='all', fOwn='all', fCh='all', sDir={};
+function renderTable(data){
+  document.getElementById('ctbody').innerHTML=data.map(c=>`
+    <tr data-st="${c.st}" data-ow="${c.owc}" data-ch="${c.ch}" class="row-${c.ch}${c.st==='dropped'?' row-dropped':''}">
+      <td><a class="clink" href="${hsUrl(c)}" target="_blank">${c.n}</a></td>
+      <td>${c.co}</td>
+      <td>${chbadge(c.ch)}</td>
+      <td>${owhtml(c)}</td>
+      <td style="white-space:nowrap;color:#64748b;">${c.cr}</td>
+      <td style="white-space:nowrap;">${c.lc}</td>
+      <td style="white-space:nowrap;">${c.lr||'<span style="color:#cbd5e1;">—</span>'}</td>
+      <td>${stalebar(c.ds,c.st)}</td>
+      <td>${sbadge(c.st)}</td>
+      <td>${lfbadge(c.lf)}</td>
+      <td><span class="bdg ${c.rep?'b-yes':'b-no'}">${c.rep?'Replied':'No reply'}</span></td>
+      <td>${lsbadge(c.ls)}</td>
+    </tr>`).join('');
+}
+function applyFilters(){
+  const q=(document.getElementById('srch')||{}).value||'';
+  const ql=q.toLowerCase();
+  // determine which channel to show
+  const chF = activeChannel!=='all' ? activeChannel : fCh;
+  document.querySelectorAll('#ctbody tr').forEach(r=>{
+    const sm=fStat==='all'||r.dataset.st===fStat;
+    const om=fOwn==='all'||r.dataset.ow===fOwn;
+    const cm=chF==='all'||r.dataset.ch===chF;
+    const qm=!ql||r.textContent.toLowerCase().includes(ql);
+    r.style.display=(sm&&om&&cm&&qm)?'':'none';
+  });
+}
+function setF(f,btn){
+  fStat=f;
+  document.querySelectorAll('.fbtn').forEach(b=>{if(['All','Active','Warming','Stale','Dropped'].some(t=>b.textContent.trim().startsWith(t)))b.classList.remove('af');});
+  btn.classList.add('af');applyFilters();
+}
+function setO(o,btn){
+  fOwn=fOwn===o?'all':o;
+  document.querySelectorAll('.fbtn').forEach(b=>{if(['SS','VA','PK'].some(t=>b.textContent.trim().startsWith(t)))b.classList.remove('af');});
+  if(fOwn!=='all')btn.classList.add('af');
+  applyFilters();
+}
+function setC(ch,btn){
+  fCh=fCh===ch?'all':ch;
+  document.querySelectorAll('.fbtn').forEach(b=>{if(['📤','📥'].some(t=>b.textContent.trim().startsWith(t)))b.classList.remove('af','af-teal');});
+  if(fCh!=='all'){
+    if(ch==='inb') btn.classList.add('af-teal');
+    else btn.classList.add('af');
+  }
+  applyFilters();
+}
+function srt(col){
+  const tb=document.getElementById('ctbody');
+  const rows=Array.from(tb.querySelectorAll('tr'));
+  sDir[col]=!sDir[col];
+  rows.sort((a,b)=>{
+    const av=a.cells[col].textContent.trim(), bv=b.cells[col].textContent.trim();
+    return sDir[col]?av.localeCompare(bv):bv.localeCompare(av);
+  });
+  rows.forEach(r=>tb.appendChild(r));
+}
+renderTable(C);
+
+// ---- HISTORY TABLE ----
+function renderHist(){
+  document.getElementById('histBody').innerHTML=C.map(c=>`
+    <tr class="row-${c.ch}${c.st==='dropped'?' row-dropped':''}">
+      <td><a class="clink" href="${hsUrl(c)}" target="_blank">${c.n}</a></td>
+      <td>${c.co}</td>
+      <td>${chbadge(c.ch)}</td>
+      <td>${owhtml(c)}</td>
+      <td style="color:#64748b;">${c.cr}</td>
+      <td>${c.lc}</td>
+      <td>${c.lr||'<span style="color:#cbd5e1;">—</span>'}</td>
+      <td style="font-weight:600;">${daysSeg(c.cr)}d</td>
+      <td>${sbadge(c.st)}</td>
+    </tr>`).join('');
+}
+renderHist();
+
+// ---- FOCUS LIST ----
+const focusData=[
+  {rank:1,cls:'r-red',id:'425404108532',n:'Marco Vaghetti',co:'Marv Creative',ch:'out',reason:'15 days — contacted once on creation day, no follow-up sent',dc:'#dc2626',ds:'15d ago'},
+  {rank:2,cls:'r-red',id:'384558516936',n:'Rose Andrews',co:'Beauty Bay',ch:'out',reason:'14 days — high-value brand, needs urgent re-engagement',dc:'#dc2626',ds:'14d ago'},
+  {rank:3,cls:'r-red',id:'400990724817',n:'Simon Kniveton',co:'TOFS',ch:'out',reason:'14 days — try a different channel or value proposition',dc:'#dc2626',ds:'14d ago'},
+  {rank:4,cls:'r-red',id:'400986521294',n:'Nigel Cokell',co:'Booths',ch:'out',reason:'14 days — consider LinkedIn outreach or case study email',dc:'#dc2626',ds:'14d ago'},
+  {rank:5,cls:'r-amber',id:'391472901833',n:'Paul Morris',co:'RS Group',ch:'out',reason:'💬 Replied Feb 16 — 11 days since, follow-up is overdue',dc:'#d97706',ds:'11d ago'},
+  {rank:6,cls:'r-amber',id:'391380659912',n:'Tom Armenante',co:'GTSE',ch:'out',reason:'💬 Replied Feb 17 — 9 days since, at risk of cooling',dc:'#d97706',ds:'9d ago'},
+  {rank:7,cls:'r-teal',id:'431083548408',n:'Inna Merenkova',co:'Insights Lighthouse',ch:'inb',reason:'📥 Inbound · 4 days · "No budget" flagged — book a discovery call to probe further',dc:'#0891b2',ds:'4d ago'},
+  {rank:8,cls:'r-purple',id:'391395012320',n:'Nina Daniels',co:'Nina D',ch:'out',reason:'🌟 OPPORTUNITY (outbound) — schedule proposal or discovery call this week',dc:'#7c3aed',ds:'2d ago'},
+  {rank:9,cls:'r-teal',id:'436317190886',n:'Gladson B',co:'Arkmedes',ch:'inb',reason:'🌟 OPPORTUNITY (inbound) — replied Feb 24, status "Working" — advance next steps',dc:'#0891b2',ds:'3d ago'},
+];
+document.getElementById('focusList').innerHTML=focusData.map(f=>`
+  <div class="fi">
+    <div class="fi-rank ${f.cls}">${f.rank}</div>
+    <div style="flex:1;min-width:0;">
+      <div style="display:flex;align-items:center;gap:5px;">
+        <a class="nlink" href="${BASE_URL+f.id}" target="_blank" style="font-weight:700;font-size:12px;color:#1e293b;" onmouseover="this.style.color='#2563eb'" onmouseout="this.style.color='#1e293b'">${f.n} <span style="font-size:9px;color:#94a3b8;">↗</span></a>
+        ${f.ch==='inb'?'<span class="bdg b-inb">IN</span>':'<span class="bdg b-out">OUT</span>'}
+      </div>
+      <div class="fi-co">${f.co}</div>
+      <div class="fi-reason" style="color:${f.dc};">${f.reason}</div>
+    </div>
+    <div class="fi-days" style="color:${f.dc};">${f.ds}</div>
+  </div>`).join('');
+
+// ---- ENGAGEMENT BARS ----
+function renderEng(){
+  const sorted=[...C].filter(c=>c.st!=='dropped').sort((a,b)=>b.sc-a.sc);
+  const dropped=C.filter(c=>c.st==='dropped');
+  const all=[...sorted,...dropped];
+  document.getElementById('engBars').innerHTML=all.map(c=>{
+    const col=c.st==='dropped'?'#94a3b8':c.sc>=70?'#22c55e':c.sc>=40?'#d97706':'#dc2626';
+    const chDot=c.ch==='inb'?`<span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#0891b2;margin-right:2px;vertical-align:middle;"></span>`:'';
+    return `<div style="margin-bottom:6px;">
+      <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:2px;align-items:center;">
+        <span>${chDot}<a href="${hsUrl(c)}" target="_blank" style="font-weight:600;color:#1e293b;text-decoration:none;" onmouseover="this.style.color='#2563eb'" onmouseout="this.style.color='#1e293b'">${c.n}</a> <span style="color:#94a3b8;font-weight:400;">· ${c.co}</span></span>
+        <span style="font-weight:800;color:${col};">${c.sc}</span>
+      </div>
+      <div class="prog-track"><div class="prog-fill" style="width:${c.sc}%;background:${col};"></div></div>
+    </div>`;
+  }).join('');
+}
+renderEng();
+
+// ---- TIMELINES ----
+function renderTimelines(){
+  const start=new Date('2026-01-15'), end=new Date('2026-02-27');
+  const span=end-start;
+  function pct(ds){ if(!ds)return null; const d=new Date(ds); return Math.min(Math.max(((d-start)/span)*82+2,2),84); }
+  const nowPct=88;
+  const ch=activeChannel;
+  const data=C.filter(c=>ch==='all'||c.ch===ch);
+  const outbound=data.filter(c=>c.ch==='out');
+  const inbound=data.filter(c=>c.ch==='inb');
+  function renderGroup(group, sectionLabel, color){
+    if(!group.length)return '';
+    return `<div class="tl-section-lbl">${sectionLabel}</div>`+group.map(c=>{
+      const cp=pct(c.cr), lp=pct(c.lc), rp=pct(c.lr);
+      const col=c.st==='active'?'#22c55e':c.st==='paused'?'#d97706':c.st==='dropped'?'#94a3b8':'#dc2626';
+      return `<div class="tl-item">
+        <div class="tl-hdr">
+          ${owhtml(c)}
+          <a href="${hsUrl(c)}" target="_blank" style="font-weight:700;font-size:12px;color:#1e293b;text-decoration:none;" onmouseover="this.style.color='${color}'" onmouseout="this.style.color='#1e293b'">${c.n} <span style="font-size:9px;color:#94a3b8;">↗</span></a>
+          <span style="color:#94a3b8;font-size:11px;">·</span>
+          <span style="color:#64748b;font-size:11px;">${c.co}</span>
+          ${sbadge(c.st)} ${lfbadge(c.lf)} ${chbadge(c.ch)}
+          ${c.ls?lsbadge(c.ls):''}
+        </div>
+        <div class="tl-track">
+          <div style="position:absolute;top:50%;left:2%;right:10%;height:2px;background:#e2e8f0;transform:translateY(-50%);border-radius:1px;"></div>
+          <div style="position:absolute;top:50%;left:${cp}%;width:${Math.max((lp||cp)-cp,0.5)}%;height:3px;background:${col};opacity:0.25;transform:translateY(-50%);border-radius:1px;"></div>
+          <div title="Created: ${c.cr}" style="position:absolute;top:50%;left:${cp}%;transform:translate(-50%,-50%);width:13px;height:13px;border-radius:50%;background:#94a3b8;border:2px solid white;box-shadow:0 1px 3px rgba(0,0,0,0.2);cursor:pointer;"></div>
+          <div style="position:absolute;top:-15px;left:${cp}%;transform:translateX(-50%);font-size:8px;color:#94a3b8;white-space:nowrap;">${c.cr.slice(5)}</div>
+          ${lp?`<div title="Last Contacted: ${c.lc}" style="position:absolute;top:50%;left:${lp}%;transform:translate(-50%,-50%);width:14px;height:14px;border-radius:50%;background:${color};border:2px solid white;box-shadow:0 1px 3px rgba(0,0,0,0.2);cursor:pointer;z-index:5;"></div>
+          <div style="position:absolute;bottom:-15px;left:${lp}%;transform:translateX(-50%);font-size:8px;color:${color};white-space:nowrap;">${c.lc.slice(5)}</div>`:''}
+          ${rp?`<div title="Last Replied: ${c.lr}" style="position:absolute;top:50%;left:${rp}%;transform:translate(-50%,-50%);width:14px;height:14px;border-radius:50%;background:#22c55e;border:2px solid white;box-shadow:0 1px 3px rgba(0,0,0,0.2);cursor:pointer;z-index:6;"></div>
+          <div style="position:absolute;top:-15px;left:${rp}%;transform:translateX(-50%);font-size:8px;color:#22c55e;white-space:nowrap;">${c.lr.slice(5)}</div>`:''}
+          <div style="position:absolute;top:50%;left:${nowPct}%;transform:translate(-50%,-50%);width:13px;height:13px;border-radius:50%;background:#f8fafc;border:2px dashed #94a3b8;"></div>
+          <div style="position:absolute;bottom:-15px;left:${nowPct}%;transform:translateX(-50%);font-size:8px;color:#94a3b8;white-space:nowrap;">Today</div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+  document.getElementById('tlContainer').innerHTML =
+    renderGroup(outbound, '📤 Outbound Contacts', '#2563eb') +
+    renderGroup(inbound,  '📥 Inbound Contacts',  '#0891b2');
+}
+renderTimelines();
+
+// ---- ACTIVITY FEED ----</script>
+</body>
+</html>
